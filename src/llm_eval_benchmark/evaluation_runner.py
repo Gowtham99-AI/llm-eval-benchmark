@@ -1,10 +1,13 @@
-
 from dataclasses import dataclass
 from time import perf_counter
 from typing import Literal
 
 from llm_eval_benchmark.dataset_loader import load_examples
-from llm_eval_benchmark.metrics import JsonSchemaScorer
+from llm_eval_benchmark.metrics import (
+    ContainsAllScorer,
+    JsonSchemaScorer,
+    KeywordMatchScorer,
+)
 from llm_eval_benchmark.model_adapter import ModelAdapter
 
 
@@ -37,26 +40,49 @@ class EvaluationRunner:
     ) -> None:
         self.adapter = adapter
         self.dataset_path = dataset_path
-        self.scorer = JsonSchemaScorer()
+
+        self.scorers = {
+            "json_schema": JsonSchemaScorer(),
+            "keyword_match": KeywordMatchScorer(),
+            "contains_all": ContainsAllScorer(),
+        }
 
     def run(self) -> EvaluationReport:
         examples = load_examples(self.dataset_path)
         results: list[ExampleResult] = []
 
-        # Validate the entire dataset before running the model.
-        # This prevents partial benchmark runs caused by
-        # unsupported scoring methods or invalid configurations.
+        # Validate the entire dataset before calling the model.
         for example in examples:
-            if example.scoring_method not in self.scorer.supported_methods:
+            scorer = self.scorers.get(example.scoring_method)
+
+            if scorer is None:
                 raise ValueError(
                     f"Unsupported evaluation: {example.scoring_method}"
                 )
 
-            if (
-                example.category != "structured_output"
-                or example.scoring_method != "json_schema"
-                or not isinstance(example.expected, dict)
-            ):
+            if example.scoring_method == "json_schema":
+                valid_configuration = (
+                    example.category == "structured_output"
+                    and isinstance(example.expected, dict)
+                )
+
+            elif example.scoring_method == "keyword_match":
+                valid_configuration = (
+                    example.category
+                    in {"software_qa", "code_understanding"}
+                    and isinstance(example.expected, dict)
+                )
+
+            elif example.scoring_method == "contains_all":
+                valid_configuration = (
+                    example.category == "instruction_following"
+                    and isinstance(example.expected, dict)
+                )
+
+            else:
+                valid_configuration = False
+
+            if not valid_configuration:
                 raise ValueError(
                     f"Unsupported evaluation configuration for "
                     f"example {example.id!r}: "
@@ -65,13 +91,14 @@ class EvaluationRunner:
                     f"expected_type={type(example.expected).__name__}"
                 )
 
-        # Run each example independently so one model failure
-        # does not prevent the remaining examples from being evaluated.
+        # Evaluate examples independently so one model failure
+        # does not prevent the remaining examples from running.
         for example in examples:
             start_time = perf_counter()
 
             try:
                 response = self.adapter.generate(example.prompt)
+
             except Exception as exc:
                 latency_seconds = perf_counter() - start_time
 
@@ -90,8 +117,12 @@ class EvaluationRunner:
 
             latency_seconds = perf_counter() - start_time
 
+            # Select the scorer based on this example's scoring method.
+            scorer = self.scorers[example.scoring_method]
+
             try:
-                scores = self.scorer.score(example.expected, response)
+                scores = scorer.score(example.expected, response)
+
             except Exception as exc:
                 results.append(
                     ExampleResult(
@@ -101,13 +132,15 @@ class EvaluationRunner:
                         scores={},
                         latency_seconds=latency_seconds,
                         status="error",
-                        error=f"Scoring error: {type(exc).__name__}: {exc}",
+                        error=(
+                            f"Scoring error: "
+                            f"{type(exc).__name__}: {exc}"
+                        ),
                     )
                 )
                 continue
 
-            # Token counting is optional. Adapters that do not
-            # implement count_tokens can still be evaluated.
+            # Token counting is optional.
             generated_tokens: int | None = None
             count_tokens = getattr(self.adapter, "count_tokens", None)
 
@@ -115,7 +148,7 @@ class EvaluationRunner:
                 try:
                     generated_tokens = count_tokens(response)
                 except Exception:
-                    # Token counting must not invalidate a valid score.
+                    # Token-counting failures must not invalidate scoring.
                     generated_tokens = None
 
             tokens_per_second = (
@@ -137,14 +170,15 @@ class EvaluationRunner:
                 )
             )
 
-        # Aggregate scores from successful examples only.
+        # Aggregate metrics using successfully scored examples only.
         successful_results = [
-            result for result in results
+            result
+            for result in results
             if result.status == "success"
         ]
 
-        # Calculate each metric independently. This remains correct
-        # even if different scoring methods produce different metrics.
+        # Each metric is averaged independently because different
+        # evaluation tasks produce different metrics.
         metric_names = {
             metric
             for result in successful_results

@@ -1,0 +1,13 @@
+{
+  "dataset_name": "llm-eval-benchmark-examples",
+  "dataset_version": "0.1.0",
+  "description": "Initial evaluation dataset covering structured output, software Q&A, code understanding, and instruction following.",
+  "format": "jsonl",
+  "maintainer": "project-maintainer",
+  "evaluation_tasks": [
+    "structured_output",
+    "software_qa",
+    "code_understanding",
+    "instruction_following"
+  ]
+}

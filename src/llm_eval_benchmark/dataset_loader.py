@@ -33,7 +33,7 @@ def load_examples(path: str | Path) -> list[EvaluationExample]:
                 ) from exc
 
             if not isinstance(record, dict):
-                raise ValueError(
+                raise TypeError(
                     f"Expected a JSON object at line {line_number}."
                 )
 
