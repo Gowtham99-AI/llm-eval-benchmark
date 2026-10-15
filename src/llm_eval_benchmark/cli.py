@@ -5,6 +5,7 @@ from pathlib import Path
 import typer
 
 from llm_eval_benchmark.evaluation_runner import EvaluationRunner
+from llm_eval_benchmark.report_writer import save_report
 
 app = typer.Typer(
     name="benchmark",
@@ -23,6 +24,7 @@ class DemoModelAdapter:
         return json.dumps({"name": "Ada", "active": True})
 
 
+
 @app.command()
 def evaluate(
     dataset: Path = typer.Option(
@@ -34,12 +36,15 @@ def evaluate(
         dir_okay=False,
     ),
 ) -> None:
-    """Evaluate the demo model on the selected dataset."""
+    """Evaluate the demo model and save a JSON report."""
     try:
         report = EvaluationRunner(
             adapter=DemoModelAdapter(),
             dataset_path=dataset,
         ).run()
+
+        output_path = save_report(report, "results")
+
     except (ValueError, OSError) as exc:
         typer.echo(f"Evaluation failed: {exc}", err=True)
         raise typer.Exit(code=1) from exc
@@ -50,6 +55,9 @@ def evaluate(
 
     for metric, score in report.aggregate_scores.items():
         typer.echo(f"  {metric}: {score:.3f}")
+
+    typer.echo(f"Report saved to: {output_path}")
+
 
 
 if __name__ == "__main__":
