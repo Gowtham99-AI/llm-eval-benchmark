@@ -97,3 +97,49 @@ def test_runner_records_performance_metrics(tmp_path):
     if result.latency_seconds > 0:
         assert result.tokens_per_second is not None
         assert result.tokens_per_second > 0
+
+
+def test_runner_continues_after_generation_failure(tmp_path):
+    first = valid_example()
+    second = valid_example()
+    first["id"] = "json_001"
+    second["id"] = "json_002"
+
+    dataset = tmp_path / "examples.jsonl"
+    dataset.write_text(
+        json.dumps(first) + "\n" + json.dumps(second) + "\n",
+        encoding="utf-8",
+    )
+
+    class IntermittentAdapter(FakeModelAdapter):
+        def generate(self, prompt: str) -> str:
+            self.calls += 1
+            if self.calls == 1:
+                raise RuntimeError("Simulated model failure")
+            return '{"name": "Ada", "active": true}'
+
+    adapter = IntermittentAdapter("unused")
+    report = EvaluationRunner(adapter, dataset).run()
+
+    assert report.total_examples == 2
+    assert report.results[0].status == "error"
+    assert "Simulated model failure" in report.results[0].error
+    assert report.results[1].status == "success"
+    assert report.aggregate_scores["exact_match"] == 1.0
+    assert adapter.calls == 2
+
+
+def test_runner_handles_all_generation_failures(tmp_path):
+    dataset = create_dataset(tmp_path, valid_example())
+
+    class FailingAdapter(FakeModelAdapter):
+        def generate(self, prompt: str) -> str:
+            raise RuntimeError("Model unavailable")
+
+    report = EvaluationRunner(
+        FailingAdapter("unused"),
+        dataset,
+    ).run()
+
+    assert report.results[0].status == "error"
+    assert report.aggregate_scores == {}

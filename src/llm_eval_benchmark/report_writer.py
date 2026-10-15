@@ -23,6 +23,8 @@ def save_report(
             "model_id": report.model_id,
             "created_at": timestamp.isoformat(),
             "total_examples": report.total_examples,
+            "successful_examples": sum(result.status == "success" for result in report.results),
+            "failed_examples": sum(result.status == "error" for result in report.results),
         },
         "aggregate_scores": report.aggregate_scores,
         "results": [
@@ -34,6 +36,8 @@ def save_report(
                 "latency_seconds": result.latency_seconds,
                 "generated_tokens": result.generated_tokens,
                 "tokens_per_second": result.tokens_per_second,
+                "status": result.status,
+                "error": result.error,
             }
             for result in report.results
         ],
