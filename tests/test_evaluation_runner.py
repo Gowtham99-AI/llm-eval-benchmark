@@ -76,3 +76,24 @@ def test_runner_rejects_unsupported_scoring(tmp_path):
         EvaluationRunner(adapter, dataset).run()
 
     assert adapter.calls == 0
+
+
+def test_runner_records_performance_metrics(tmp_path):
+    class MeasuredFakeAdapter(FakeModelAdapter):
+        def count_tokens(self, text: str) -> int:
+            return 10
+
+    dataset = create_dataset(tmp_path, valid_example())
+    adapter = MeasuredFakeAdapter(
+        '{"name": "Ada", "active": true}'
+    )
+
+    report = EvaluationRunner(adapter, dataset).run()
+    result = report.results[0]
+
+    assert result.latency_seconds >= 0
+    assert result.generated_tokens == 10
+
+    if result.latency_seconds > 0:
+        assert result.tokens_per_second is not None
+        assert result.tokens_per_second > 0

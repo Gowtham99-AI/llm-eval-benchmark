@@ -31,6 +31,9 @@ def save_report(
                 "model_id": result.model_id,
                 "response": result.response,
                 "scores": result.scores,
+                "latency_seconds": result.latency_seconds,
+                "generated_tokens": result.generated_tokens,
+                "tokens_per_second": result.tokens_per_second,
             }
             for result in report.results
         ],

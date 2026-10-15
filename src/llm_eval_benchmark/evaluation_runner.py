@@ -1,6 +1,7 @@
 
 from dataclasses import dataclass
 from pathlib import Path
+from time import perf_counter
 
 from llm_eval_benchmark.dataset_loader import load_examples
 from llm_eval_benchmark.metrics import JsonSchemaScorer
@@ -13,6 +14,10 @@ class ExampleResult:
     model_id: str
     response: str
     scores: dict[str, float]
+    latency_seconds: float = 0.0
+    generated_tokens: int | None = None
+    tokens_per_second: float | None = None
+
 
 
 @dataclass(frozen=True)
@@ -53,9 +58,27 @@ class EvaluationRunner:
                     "expected values."
                 )
 
+        
         for example in examples:
+            start_time = perf_counter()
             response = self.adapter.generate(example.prompt)
+            latency_seconds = perf_counter() - start_time
+
             scores = self.scorer.score(example.expected, response)
+
+            count_tokens = getattr(self.adapter, "count_tokens", None)
+            generated_tokens = (
+                count_tokens(response)
+                if callable(count_tokens)
+                else None
+            )
+
+            tokens_per_second = (
+                generated_tokens / latency_seconds
+                if generated_tokens is not None
+                and latency_seconds > 0
+                else None
+            )
 
             results.append(
                 ExampleResult(
@@ -63,6 +86,9 @@ class EvaluationRunner:
                     model_id=self.adapter.model_id,
                     response=response,
                     scores=scores,
+                    latency_seconds=latency_seconds,
+                    generated_tokens=generated_tokens,
+                    tokens_per_second=tokens_per_second,
                 )
             )
 
