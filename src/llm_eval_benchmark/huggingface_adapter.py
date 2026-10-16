@@ -82,3 +82,17 @@ class HuggingFaceAdapter:
                 add_special_tokens=False,
             )
         )
+
+    
+    def reset_peak_memory_stats(self) -> None:
+        """Reset CUDA peak-memory tracking when CUDA is available."""
+        if self.torch.cuda.is_available():
+            self.torch.cuda.reset_peak_memory_stats()
+
+    def get_peak_memory_mb(self) -> float | None:
+        """Return peak PyTorch CUDA allocated memory in MB."""
+        if not self.torch.cuda.is_available():
+            return None
+
+        peak_bytes = self.torch.cuda.max_memory_allocated()
+        return peak_bytes / (1024 * 1024)

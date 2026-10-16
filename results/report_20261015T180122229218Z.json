@@ -1,0 +1,24 @@
+{
+  "run_metadata": {
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "created_at": "2026-10-15T18:01:22.229218+00:00",
+    "total_examples": 1
+  },
+  "aggregate_scores": {
+    "json_valid": 0.0,
+    "schema_valid": 0.0,
+    "exact_match": 0.0
+  },
+  "results": [
+    {
+      "example_id": "json_001",
+      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "response": "```json\n{\n  \"name\": \"Ada\",\n  \"active\": true\n}\n```",
+      "scores": {
+        "json_valid": 0.0,
+        "schema_valid": 0.0,
+        "exact_match": 0.0
+      }
+    }
+  ]
+}

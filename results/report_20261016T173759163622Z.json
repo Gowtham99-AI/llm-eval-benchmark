@@ -1,0 +1,488 @@
+{
+  "run_metadata": {
+    "model_id": "demo-json-model",
+    "created_at": "2026-10-16T17:37:59.163622+00:00",
+    "total_examples": 24,
+    "environment": {
+      "python_version": "3.12.13",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "package_versions": {
+        "llm-eval-benchmark": "0.1.0",
+        "transformers": "5.19.0",
+        "torch": "2.14.1",
+        "sentence-transformers": "5.7.0",
+        "evaluate": null
+      }
+    },
+    "successful_examples": 24,
+    "failed_examples": 0,
+    "dataset_path": "data\\examples.jsonl",
+    "dataset_fingerprint": "4698162094d73a5d6fa573633307c74efd970308a1e2e7359526b2ac00de9f85",
+    "backend": "demo",
+    "max_new_tokens": null
+  },
+  "aggregate_scores": {
+    "semantic_similarity": -0.06973341479897499,
+    "output_constraints_pass_rate": 0.75,
+    "bleu": 0.0,
+    "exact_match": 0.16666666666666666,
+    "json_valid": 1.0,
+    "output_constraints_passed": 0.0,
+    "instruction_compliance": 0.0,
+    "schema_valid": 0.16666666666666666,
+    "normalized_exact_match": 0.0,
+    "rouge_l": 0.0,
+    "keyword_recall": 0.0
+  },
+  "results": [
+    {
+      "example_id": "json-001",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "json_valid": 1.0,
+        "schema_valid": 1.0,
+        "exact_match": 1.0
+      },
+      "latency_seconds": 1.2099990271963179e-05,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "json-002",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "json_valid": 1.0,
+        "schema_valid": 0.0,
+        "exact_match": 0.0
+      },
+      "latency_seconds": 4.899993655271828e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "json-003",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "json_valid": 1.0,
+        "schema_valid": 0.0,
+        "exact_match": 0.0
+      },
+      "latency_seconds": 2.3999891709536314e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "json-004",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "json_valid": 1.0,
+        "schema_valid": 0.0,
+        "exact_match": 0.0
+      },
+      "latency_seconds": 1.5999976312741637e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "json-005",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "json_valid": 1.0,
+        "schema_valid": 0.0,
+        "exact_match": 0.0
+      },
+      "latency_seconds": 1.8999999156221747e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "json-006",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "json_valid": 1.0,
+        "schema_valid": 0.0,
+        "exact_match": 0.0
+      },
+      "latency_seconds": 1.2999953469261527e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "text-match-001",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "normalized_exact_match": 0.0
+      },
+      "latency_seconds": 1.2999953469261527e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "qa-002",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "keyword_recall": 0.0
+      },
+      "latency_seconds": 1.300009898841381e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "qa-003",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "rouge_l": 0.0,
+        "bleu": 0.0
+      },
+      "latency_seconds": 1.200009137392044e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "qa-004",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "semantic_similarity": -0.11466708034276962
+      },
+      "latency_seconds": 2.0800012862309813e-05,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "qa-005",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "keyword_recall": 0.0
+      },
+      "latency_seconds": 2.3600005079060793e-05,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "qa-006",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "normalized_exact_match": 0.0
+      },
+      "latency_seconds": 6.700007361359894e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "code-001",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "keyword_recall": 0.0
+      },
+      "latency_seconds": 5.199995939619839e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "code-002",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "normalized_exact_match": 0.0
+      },
+      "latency_seconds": 4.699992132373154e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "code-003",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "rouge_l": 0.0,
+        "bleu": 0.0
+      },
+      "latency_seconds": 3.5999983083456755e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "code-004",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "semantic_similarity": -0.02479974925518036
+      },
+      "latency_seconds": 7.499998901039362e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "code-005",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "keyword_recall": 0.0
+      },
+      "latency_seconds": 3.329999162815511e-05,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "code-006",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "output_constraints_pass_rate": 0.75,
+        "output_constraints_passed": 0.0
+      },
+      "latency_seconds": 1.2600008631125093e-05,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "instruction-001",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "instruction_compliance": 0.0
+      },
+      "latency_seconds": 1.0000003385357559e-05,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "instruction-002",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "output_constraints_pass_rate": 0.75,
+        "output_constraints_passed": 0.0
+      },
+      "latency_seconds": 9.2999980552122e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "instruction-003",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "instruction_compliance": 0.0
+      },
+      "latency_seconds": 8.400005754083395e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "instruction-004",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "normalized_exact_match": 0.0
+      },
+      "latency_seconds": 7.599999662488699e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "instruction-005",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "instruction_compliance": 0.0
+      },
+      "latency_seconds": 8.200004231184721e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    },
+    {
+      "example_id": "instruction-006",
+      "model_id": "demo-json-model",
+      "response": "{\"name\": \"Ada\", \"active\": true}",
+      "scores": {
+        "rouge_l": 0.0,
+        "bleu": 0.0
+      },
+      "latency_seconds": 6.89999433234334e-06,
+      "generated_tokens": null,
+      "tokens_per_second": null,
+      "status": "success",
+      "error": null,
+      "error_type": null,
+      "attempt_count": 1,
+      "peak_memory_mb": null,
+      "judge_model_id": null,
+      "judge_justifications": null
+    }
+  ]
+}

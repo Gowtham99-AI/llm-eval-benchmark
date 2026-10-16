@@ -1,0 +1,77 @@
+{
+  "dataset_path": "data/examples.jsonl",
+  "coverage": {
+    "total_examples": 24,
+    "categories": {
+      "structured_output": 6,
+      "software_qa": 6,
+      "code_understanding": 6,
+      "instruction_following": 6
+    },
+    "difficulties": {
+      "easy": 8,
+      "medium": 8,
+      "hard": 8
+    },
+    "scoring_methods": {
+      "json_schema": 6,
+      "normalized_exact_match": 4,
+      "keyword_match": 4,
+      "reference_text": 3,
+      "semantic_similarity": 2,
+      "output_constraints": 2,
+      "contains_all": 3
+    },
+    "category_difficulties": {
+      "structured_output": {
+        "easy": 2,
+        "medium": 2,
+        "hard": 2
+      },
+      "software_qa": {
+        "easy": 2,
+        "medium": 2,
+        "hard": 2
+      },
+      "code_understanding": {
+        "easy": 2,
+        "medium": 2,
+        "hard": 2
+      },
+      "instruction_following": {
+        "easy": 2,
+        "medium": 2,
+        "hard": 2
+      }
+    },
+    "category_scoring_methods": {
+      "structured_output": {
+        "json_schema": 6
+      },
+      "software_qa": {
+        "normalized_exact_match": 2,
+        "keyword_match": 2,
+        "reference_text": 1,
+        "semantic_similarity": 1
+      },
+      "code_understanding": {
+        "keyword_match": 2,
+        "normalized_exact_match": 1,
+        "reference_text": 1,
+        "semantic_similarity": 1,
+        "output_constraints": 1
+      },
+      "instruction_following": {
+        "contains_all": 3,
+        "output_constraints": 1,
+        "normalized_exact_match": 1,
+        "reference_text": 1
+      }
+    }
+  },
+  "scoring_compatibility": {
+    "valid": true,
+    "issue_count": 0,
+    "issues": []
+  }
+}

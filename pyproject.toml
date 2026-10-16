@@ -12,6 +12,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "hatchling>=1.32.4",
+    "huggingface-hub>=2.2.0",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
     "ruff>=0.17.1",
@@ -26,3 +27,40 @@ packages = ["src/llm_eval_benchmark"]
 
 [project.scripts]
 benchmark = "llm_eval_benchmark.cli:app"
+
+[project.optional-dependencies]
+huggingface = [
+    "torch>=2.14.1",
+    "transformers>=5.19.0",
+]
+
+text-metrics = [
+    "rouge-score>=0.1.2,<1.0",
+    "nltk>=3.9,<4.0",
+]
+
+semantic = [
+    "sentence-transformers>=3.0,<6.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=llm_eval_benchmark",
+    "--cov-report=term-missing",
+    "--cov-report=xml:coverage.xml",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Typer uses Option and Argument declarations in function defaults.
+"src/llm_eval_benchmark/cli.py" = ["B008"]
+
+# Evaluation failures become report results; optional instrumentation must not break evaluation.
+"src/llm_eval_benchmark/evaluation_runner.py" = ["BLE001", "S110"]
+
+# Preserve the existing ValueError validation contract for invalid inputs.
+"src/llm_eval_benchmark/judge.py" = ["TRY004"]
+"src/llm_eval_benchmark/metrics.py" = ["TRY004"]
+"src/llm_eval_benchmark/report_comparator.py" = ["TRY004"]

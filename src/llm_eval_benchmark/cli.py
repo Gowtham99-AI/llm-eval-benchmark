@@ -7,6 +7,7 @@ import typer
 
 from llm_eval_benchmark.evaluation_runner import EvaluationRunner
 from llm_eval_benchmark.huggingface_adapter import HuggingFaceAdapter
+from llm_eval_benchmark.report_comparator import compare_reports
 from llm_eval_benchmark.report_writer import save_report
 
 app = typer.Typer(
@@ -70,7 +71,15 @@ def evaluate(
             dataset_path=dataset,
         ).run()
 
-        output_path = save_report(report, "results")
+        output_path = save_report(
+            report,
+            output_dir="results",
+            dataset_path=str(dataset),
+            backend=backend,
+            max_new_tokens=(
+                max_new_tokens if backend == "huggingface" else None
+            ),
+        )
 
     except (ValueError, OSError, RuntimeError) as exc:
         typer.echo(f"Evaluation failed: {exc}", err=True)
@@ -85,8 +94,31 @@ def evaluate(
 
     typer.echo(f"Report saved to: {output_path}")
 
+@app.command()
+def compare(
+    report_a: Path = typer.Argument(
+        ...,
+        help="Path to the first benchmark report.",
+        exists=True,
+        dir_okay=False,
+        readable=True,
+    ),
+    report_b: Path = typer.Argument(
+        ...,
+        help="Path to the second benchmark report.",
+        exists=True,
+        dir_okay=False,
+        readable=True,
+    ),
+) -> None:
+    """Compare two saved benchmark reports."""
+    try:
+        comparison = compare_reports(report_a, report_b)
+    except (ValueError, OSError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
 
-
+    typer.echo(json.dumps(comparison, indent=2))
 
 if __name__ == "__main__":
     app()
